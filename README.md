@@ -20,7 +20,7 @@ When you have completed this code pattern, you will understand:
 ## Flow
 
 ### Social Login 
-<img src="SocialLogin.png" alt="Architecture diagram - Login through on-premise LDAP server" width="1024" border="10" />
+<img src="doc/source/images/SocialLogin.png" alt="Architecture diagram - Login through on-premise LDAP server" width="1024" border="10" />
 
 The diagram above illustrates the login flow (here described with Google but also relevant to Facebook or other social providers). The diagram shows that the trigger to call social providers is initiated by the client.
 
@@ -37,7 +37,7 @@ The diagram above illustrates the login flow (here described with Google but als
 
 ### Login through on-premise LDAP server ###
 
-<img src="ldaplogin.png" alt="Architecture diagram - Login through on-premise LDAP server" width="1024" border="10" />
+<img src="doc/source/images/ldaplogin.png" alt="Architecture diagram - Login through on-premise LDAP server" width="1024" border="10" />
 
 1. User launches the mobile app, and clicks on the login button in the login screen.
 2. Mobile app sends the user credentials to MFP server for validation. MFP server invokes the security adapter logic to validate user credentials. 
@@ -134,11 +134,11 @@ If the newly added destination shows a raised hand in red colour with info "Acce
 
 1. Get the Google Web Client ID by registering the app at [Google API console](https://console.developers.google.com/apis/credentials)
 
-<img src="GoogleClientID.png" alt="Architecture diagram - Login through on-premise LDAP server" width="1024" border="10" />
+<img src="doc/source/images/GoogleClientID.png" alt="Architecture diagram - Login through on-premise LDAP server" width="1024" border="10" />
 
 2. Get the Facebook App ID by registering that app at [Facebook apps console](https://developers.facebook.com/apps/)
 
-<img src="FacebookAppID.png" alt="Architecture diagram - Login through on-premise LDAP server" width="1024" border="10" />
+<img src="doc/source/images/FacebookAppID.png" alt="Architecture diagram - Login through on-premise LDAP server" width="1024" border="10" />
 
 
 
@@ -282,17 +282,16 @@ Verify MFP Adapter configuration as below:
 
   1. Inside the MFP dashboard, click on the `MyWardData` adapter. Under `Configurations` tab, you should see the various properties we specified in [Step 7.3](#73-specify-cloudant-credentials-in-mfp-adapter) and [Step 7.4](#74-specify-cloud-object-storage-credentials-in-mfp-adapter) for accessing Cloudant database and Cloud Object Storage as shown below. As an alternative to specifying those property values in `MobileFoundationAdapters/MyWardData/src/main/adapter-resources/adapter.xml` as previously shown in [Step 7.3](#73-specify-cloudant-credentials-in-mfp-adapter) and [Step 7.4](#74-specify-cloud-object-storage-credentials-in-mfp-adapter), you can deploy the adapters with empty `defaultValue`, and once the adapter is deployed, change the values on this page.
 
-  <img src="MyWardDataConfigurations.png" alt="Option to specify the configuration properties for accessing Cloudant NoSQL DB and Cloud Object Storage in deployed MFP Adapter" width="640" border="10" />
+  <img src="doc/source/images/MyWardDataConfigurations.png" alt="Option to specify the configuration properties for accessing Cloudant NoSQL DB and Cloud Object Storage in deployed MFP Adapter" width="640" border="10" />
 
   * Click on `Resources` tab. You should see the various REST APIs exposed by `MyWardData` adapter as shown below. The `Security` column should show the protecting scope `UserLogin` against each REST method.
     
-  <img src="MyWardDataProtectingScope.png" alt="The REST APIs of MyWardData adapter are protected by UserLogin security scope" width="640" border="10" />
+  <img src="doc/source/images/MyWardDataProtectingScope.png" alt="The REST APIs of MyWardData adapter are protected by UserLogin security scope" width="640" border="10" />
 
 2.	Click open the 'LDAPLoginAdapter' to check its configurations
-	 <img src="LDAPLoginAdapterConfiguration.png" alt="The REST APIs of MyWardData adapter are protected by UserLogin security scope" width="640" border="10" />
+	 <img src="doc/source/images/LDAPLoginAdapterConfiguration.png" width="640" border="10" />
 3.	Click open the 'SocialLoginAdapter' to check its configuration.
-
- <img src="SocialLoginAdapterConfiguration.png" alt="The REST APIs of MyWardData adapter are protected by UserLogin security scope" width="640" border="10" />
+ 	<img src="doc/source/images/SocialLoginAdapterConfiguration.png" width="640"  border="10" />
 
 
 
