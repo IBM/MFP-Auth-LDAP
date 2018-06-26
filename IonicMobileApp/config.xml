@@ -137,6 +137,10 @@
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="26.1.0" />
         <variable name="API_KEY_FOR_IOS" value="(API_KEY_FOR_IOS)" />
     </plugin>
+    <plugin name="cordova-plugin-facebook4" spec="^1.9.1">
+        <variable name="APP_ID" value="" />
+        <variable name="APP_NAME" value="" />
+    </plugin>
     <plugin name="cordova-plugin-camera" spec="^3.0.0" />
     <plugin name="info.protonet.imageresizer" spec="^0.1.1" />
     <engine name="android" spec="~6.3.0" />
