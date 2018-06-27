@@ -32,6 +32,7 @@ import { ProblemDetailPage } from '../pages/problem-detail/problem-detail';
 import { ReportNewPage } from '../pages/report-new/report-new';
 import { AuthHandlerProvider } from '../providers/auth-handler/auth-handler';
 import { MyWardDataProvider } from '../providers/my-ward-data/my-ward-data';
+import { Facebook } from '@ionic-native/facebook';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { MyWardDataProvider } from '../providers/my-ward-data/my-ward-data';
     GoogleMaps,
     NativeGeocoder,
     Camera,
+    Facebook,
     FileTransfer,
     ImageResizer
   ]

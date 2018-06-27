@@ -74,6 +74,10 @@
         "PLAY_SERVICES_VERSION": "15.0.1",
         "ANDROID_SUPPORT_V4_VERSION": "26.1.0"
       },
+      "cordova-plugin-facebook4": {
+                "APP_ID": "",
+                "APP_NAME": ""
+      },
       "cordova-plugin-camera": {},
       "info.protonet.imageresizer": {},
       "cordova-plugin-nativegeocoder": {}
