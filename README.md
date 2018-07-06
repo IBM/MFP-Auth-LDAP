@@ -1,4 +1,4 @@
-# - Work in progress -
+
 
 # Mobile User Authentication with On-Premise LDAP Server / Social Login using IBM Mobile Foundation
 
