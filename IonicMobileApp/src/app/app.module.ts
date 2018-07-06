@@ -33,6 +33,7 @@ import { ReportNewPage } from '../pages/report-new/report-new';
 import { AuthHandlerProvider } from '../providers/auth-handler/auth-handler';
 import { MyWardDataProvider } from '../providers/my-ward-data/my-ward-data';
 import { Facebook } from '@ionic-native/facebook';
+import { GooglePlus } from '@ionic-native/google-plus';
 
 @NgModule({
   declarations: [
@@ -65,8 +66,10 @@ import { Facebook } from '@ionic-native/facebook';
     NativeGeocoder,
     Camera,
     Facebook,
+    GooglePlus,
     FileTransfer,
     ImageResizer
+	
   ]
 })
 export class AppModule {}

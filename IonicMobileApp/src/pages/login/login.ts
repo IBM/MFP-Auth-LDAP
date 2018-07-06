@@ -19,11 +19,13 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { AuthHandlerProvider } from '../../providers/auth-handler/auth-handler';
 import { HomePage } from '../home/home';
-import { Facebook } from '@ionic-native/facebook';
+
+
 
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
+  
 })
 export class LoginPage {
   form;
@@ -31,9 +33,10 @@ export class LoginPage {
   isPushed = null;
   isUsernameDisabled: boolean = false;
   fixedUsername = null;
+ 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public alertCtrl: AlertController, public authHandler:AuthHandlerProvider, public loadingCtrl: LoadingController, private fb: Facebook) {
+    public alertCtrl: AlertController, public authHandler:AuthHandlerProvider, public loadingCtrl: LoadingController) {
     console.log('--> LoginPage constructor() called');
 
     this.isPushed = navParams.get('isPushed');
@@ -66,6 +69,7 @@ export class LoginPage {
         this.navCtrl.setRoot(LoginPage);
       });
     }
+ 
   }
 
   processForm() {
@@ -87,23 +91,17 @@ export class LoginPage {
   }
 
   fbLogin() {
-    this.fb.login(['public_profile', 'user_friends', 'email'])
-      .then(res => {
-        if(res.status === "connected") {
-          var accessToken = res.authResponse.accessToken;
-          console.log(accessToken);
-          this.loader = this.loadingCtrl.create({
-            content: 'Signining in. Please wait ...',
-            dismissOnPageChange: true
-          });
-          this.loader.present().then(() => {
-            this.authHandler.loginWithFb(accessToken);
-          });
-      }
-    })
-    .catch(e => console.log('Error logging into Facebook', e));
-  }
 
+    this.authHandler.facebooklogin();
+   
+  }
+  googleLogin(){
+
+    this.authHandler.googlePlusLogin();  
+  
+  }
+ 
+  
   showAlert(alertTitle, alertMessage) {
     let prompt = this.alertCtrl.create({
       title: alertTitle,

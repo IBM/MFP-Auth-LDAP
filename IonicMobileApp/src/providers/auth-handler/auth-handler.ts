@@ -16,12 +16,17 @@
 /// <reference path="../../../plugins/cordova-plugin-mfp/typings/worklight.d.ts" />
 
 import { Injectable } from '@angular/core';
+import { LoadingController } from 'ionic-angular';
+import { Facebook } from '@ionic-native/facebook';
+import { GooglePlus } from '@ionic-native/google-plus';
+
 
 @Injectable()
 export class AuthHandlerProvider {
   securityCheckName = 'UserLogin';
   userLoginChallengeHandler;
-  securityCheckNamefb='socialLogin';
+  securityCheckNameSocial='socialLogin';
+  loginSecurityCheck = null;
   socialLoginChallengeHandler;
   initialized = false;
   username = null;
@@ -30,8 +35,12 @@ export class AuthHandlerProvider {
   handleChallengeCallback = null;
   loginSuccessCallback = null;
   loginFailureCallback = null;
+  googleLoginStatus = null;
+  fbLoginStatus = null;
+  loader: any;
+  
 
-  constructor() {
+  constructor(public fb: Facebook, public googlePlus: GooglePlus,public loadingCtrl: LoadingController) {
     console.log('--> AuthHandler constructor() called');
   }
 
@@ -47,7 +56,7 @@ export class AuthHandlerProvider {
     this.userLoginChallengeHandler.handleChallenge = this.handleChallenge.bind(this);
     this.userLoginChallengeHandler.handleSuccess = this.handleSuccess.bind(this);
     this.userLoginChallengeHandler.handleFailure = this.handleFailure.bind(this);
-    this.socialLoginChallengeHandler = WL.Client.createSecurityCheckChallengeHandler(this.securityCheckNamefb);
+    this.socialLoginChallengeHandler = WL.Client.createSecurityCheckChallengeHandler(this.securityCheckNameSocial);
     this.socialLoginChallengeHandler.handleChallenge = this.handleChallenge.bind(this);
     this.socialLoginChallengeHandler.handleSuccess = this.handleSuccess.bind(this);
     this.socialLoginChallengeHandler.handleFailure = this.handleFailure.bind(this);
@@ -104,7 +113,7 @@ export class AuthHandlerProvider {
   // Reference: https://mobilefirstplatform.ibmcloud.com/tutorials/en/foundation/8.0/authentication-and-security/user-authentication/javascript/
   checkIsLoggedIn() {
     console.log('--> AuthHandler checkIsLoggedIn called');
-    WLAuthorizationManager.obtainAccessToken('UserLogin')
+    WLAuthorizationManager.obtainAccessToken('RestrictedData')
     .then(
       (accessToken) => {
         console.log('--> AuthHandler: obtainAccessToken onSuccess');
@@ -135,7 +144,8 @@ export class AuthHandlerProvider {
       WLAuthorizationManager.login(this.securityCheckName, {'username':username, 'password':password})
       .then(
         (success) => {
-          console.log('--> AuthHandler: login success');
+          console.log('--> AuthHandler: login success');          
+          this.loginSecurityCheck = 'UserLogin';
         },
         (failure) => {
           console.log('--> AuthHandler: login failure: ' + JSON.stringify(failure));
@@ -145,18 +155,40 @@ export class AuthHandlerProvider {
     }
   }
 
+  facebooklogin(){
+    this.fb.login(['public_profile', 'user_friends', 'email'])
+    .then(res => {
+      if(res.status === "connected") {
+         
+        var accessToken = res.authResponse.accessToken;
+        console.log(accessToken);
+        this.loader = this.loadingCtrl.create({
+          content: 'Signining in. Please wait ...',
+          dismissOnPageChange: true
+        });
+        this.loader.present().then(() => {
+          this.loginWithFb(accessToken);
+        });
+      
+    }
+  })
+  .catch(e => console.log('Error logging into Facebook', e)); 
+  }
+
   loginWithFb(accessToken){
     console.log('--> AuthHandler loginwithfb called ');
     var credentials = { 'token': accessToken, 'vendor': 'facebook' };
     if (this.isChallenged) {
-      this.userLoginChallengeHandler.submitChallengeAnswer(credentials);
+      this.socialLoginChallengeHandler.submitChallengeAnswer(credentials);
     } else {
       // https://stackoverflow.com/questions/20279484/how-to-access-the-correct-this-inside-a-callback
       var self = this;
-      WLAuthorizationManager.login(this.securityCheckNamefb, credentials)
+      WLAuthorizationManager.login(this.securityCheckNameSocial, credentials)
       .then(
         (success) => {
           console.log('--> AuthHandler: login success');
+          this.loginSecurityCheck = 'socialLogin';
+          this.fbLoginStatus = 'connected';
         },
         (failure) => {
           console.log('--> AuthHandler: login failure: ' + JSON.stringify(failure));
@@ -165,6 +197,58 @@ export class AuthHandlerProvider {
       );
     }
   }
+
+  googlePlusLogin(){
+ 
+    this.googlePlus.login({
+      'scopes': '',
+      'webClientId': '618106571370-pr9058fhv2efj4635ertkgbn14tda2ha.apps.googleusercontent.com',
+      'offline': true
+    })
+	  .then(res => {        
+          console.log(res);
+          var accessToken = res.idToken;
+          console.log(accessToken);
+          this.loader = this.loadingCtrl.create({
+            content: 'Signining in. Please wait ...',
+            dismissOnPageChange: true
+          });
+          this.loader.present().then(() => {
+            this.loginWithGoogle(accessToken);
+          });
+         
+     
+    })
+    .catch(e => console.log('Error logging into Google', e)); 
+  }
+  
+  loginWithGoogle(accessToken){
+	   console.log('--> AuthHandler loginwithGoogle called ');
+    var credentials = { 'token': accessToken, 'vendor': 'google' };
+    if (this.isChallenged) {
+      this.socialLoginChallengeHandler.submitChallengeAnswer(credentials);
+    } else {
+      // https://stackoverflow.com/questions/20279484/how-to-access-the-correct-this-inside-a-callback
+      var self = this;
+      WLAuthorizationManager.login(this.securityCheckNameSocial, credentials)
+      .then(
+        (success) => {
+          console.log('--> AuthHandler: login success');
+          this.loginSecurityCheck = 'socialLogin';
+          this.googleLoginStatus = 'connected';
+          
+        },
+        (failure) => {
+          console.log('--> AuthHandler: login failure: ' + JSON.stringify(failure));
+          self.loginFailureCallback(failure.errorMsg);
+        }
+      );
+    }
+	  
+	  
+  }
+
+ 
 
   logout() {
     console.log('--> AuthHandler logout called');
@@ -177,5 +261,22 @@ export class AuthHandlerProvider {
         console.log('--> AuthHandler: logout failure: ' + JSON.stringify(failure));
       }
     );
+    if(this.googleLoginStatus === 'connected')
+    {  
+      console.log('--> AuthHandler: logging out from Google');
+      this.googlePlus.logout();
+    }
+    if(this.fbLoginStatus === 'connected')
+    {
+      console.log('--> AuthHandler: logging out from Facebook');
+      this.fb.logout();
+    }
+    
+
+  }
+
+  getLoginSecurityCheck(){
+    return this.loginSecurityCheck;
+
   }
 }

@@ -17,13 +17,17 @@
 
 import { Injectable } from '@angular/core';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { AuthHandlerProvider } from '../../providers/auth-handler/auth-handler';
 
 @Injectable()
 export class MyWardDataProvider {
   data: any = null;
   objectStorageAccess: any = null;
+  dataRequest: any = null;
+  
 
-  constructor(private transfer: FileTransfer) {
+
+  constructor(private transfer: FileTransfer, private authHandler:AuthHandlerProvider) {
     console.log('--> MyWardDataProvider constructor() called');
   }
 
@@ -35,8 +39,15 @@ export class MyWardDataProvider {
         return resolve(this.data);
       }
       // don't have the data yet
-      let dataRequest = new WLResourceRequest("/adapters/MyWardData", WLResourceRequest.GET);
-      dataRequest.send().then(
+	  if (this.authHandler.getLoginSecurityCheck()== 'UserLogin')
+	  {      
+		  this.dataRequest = new WLResourceRequest("/adapters/MyWardData/userLogin", WLResourceRequest.GET);
+	  }
+	  else {
+		  this.dataRequest = new WLResourceRequest("/adapters/MyWardData/socialLogin", WLResourceRequest.GET);
+	  }
+      
+      this.dataRequest.send().then(
         (response) => {
           console.log('--> MyWardDataProvider loaded data from adapter\n', response);
           this.data = response.responseJSON;
@@ -49,17 +60,24 @@ export class MyWardDataProvider {
   }
 
   getObjectStorageAccess() {
-    // console.log('--> MyWardDataProvider getting Object Storage AuthToken from adapter ...');
+    
     return new Promise((resolve, reject) => {
       if (this.objectStorageAccess) {
         // already loaded data
         return resolve(this.objectStorageAccess);
       }
       // don't have the data yet
-      let dataRequest = new WLResourceRequest("/adapters/MyWardData/objectStorage", WLResourceRequest.GET);
-      dataRequest.send().then(
+	  
+	  if (this.authHandler.getLoginSecurityCheck() == 'UserLogin')
+	  {
+		   this.dataRequest = new WLResourceRequest("/adapters/MyWardData/userLogin/objectStorage", WLResourceRequest.GET);
+	  }
+	  else {
+		   this.dataRequest = new WLResourceRequest("/adapters/MyWardData/socialLogin/objectStorage", WLResourceRequest.GET);
+	  }
+      
+      this.dataRequest.send().then(
         (response) => {
-          // console.log('--> MyWardDataProvider got Object Storage AuthToken from adapter ', response);
           this.objectStorageAccess = response.responseJSON;
           resolve(this.objectStorageAccess);
         }, (failure) => {
@@ -72,9 +90,16 @@ export class MyWardDataProvider {
   uploadNewGrievance(grievance) {
     return new Promise( (resolve, reject) => {
       console.log('--> MyWardDataProvider: Uploading following new grievance to server ...\n' + JSON.stringify(grievance));
-      let dataRequest = new WLResourceRequest("/adapters/MyWardData", WLResourceRequest.POST);
-      dataRequest.setHeader("Content-Type","application/json");
-      dataRequest.send(grievance).then(
+	  if (this.authHandler.getLoginSecurityCheck() == 'UserLogin')
+	  {
+		  this.dataRequest = new WLResourceRequest("/adapters/MyWardData/userLogin", WLResourceRequest.POST);
+	  }
+	  else {
+		  this.dataRequest = new WLResourceRequest("/adapters/MyWardData/socialLogin", WLResourceRequest.POST);
+	  }
+     
+      this.dataRequest.setHeader("Content-Type","application/json");
+      this.dataRequest.send(grievance).then(
         (response) => {
           console.log('--> MyWardDataProvider: Upload successful:\n', response);
           resolve(response)
@@ -110,4 +135,8 @@ export class MyWardDataProvider {
       })
     });
   }
+
+ 
+
+
 }

@@ -23,6 +23,10 @@ import { ProblemDetailPage } from '../problem-detail/problem-detail';
 import { ReportNewPage } from '../report-new/report-new';
 import { LoginPage } from '../login/login';
 
+
+
+
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -83,6 +87,18 @@ export class HomePage {
     this.myWardDataProvider.data = null;
     this.loadData();
   }
+
+  logout(){
+
+   
+    this.authHandler.logout();
+    this.navCtrl.setRoot(LoginPage);
+    
+    
+  }     
+    
+   
+  
 
   initAuthChallengeHandler() {
     this.authHandler.setHandleChallengeCallback(() => {
