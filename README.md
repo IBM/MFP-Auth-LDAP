@@ -25,16 +25,14 @@ When you have completed this code pattern, you will understand:
 The diagram above illustrates the login flow (here described with Google but also relevant to Facebook or other social providers). The diagram shows that the trigger to call social providers is initiated by the client.
 
 1. User launches the mobile app, and clicks on 'Google Sign In' button in the login screen.
-This Action brings up the Google login screen, where the user can enter his/her credentials.
-2. On-click of the login button in the Google login screen, Google Android SDK calls the Google Sign-In REST service.
+2. The Google Android SDK calls the Google Sign-In REST service.
 3. The access token from Google is received and the App calls the login API, with scope social-login and credentials (vendor + token).
 4. The MFP SDK sends the credentials and scope to the Authorization Server API. The Authorization API calls the mapped security check social-login to validate the credentials.
 5. The social-login security check validates the Google token with its web client identifier from the security check configuration. The social-login returns the authenticated user to the Authorization Server API.
 6. The Authorization Server API returns the authenticated user data to the MFP SDK. The MFPSDK calls the handleSuccess method in the challenge handler with the authenticated user data. The MFP SDK calls login success callback on the app.
 7. If user authentication succeeds, mobile app proceeds to show the home page. As part of this, it makes a call to MFP adapter to fetch the data from Cloudant NoSQL database. MFP adapter fetches the data from Cloudant and returns it to the mobile app. 
-8. The data fetched from Cloudant will have references to the images stored in Cloud Object Storage. Mobile app makes a call to MFP adapter to get the Authorization token for interacting with Cloud Object Storage service. MFP adapter makes a call to Cloud Object Storage service's token manager endpoint to get the Authorization token and returns it to the mobile app.
-9.  Mobile app uses this token to further interact with the Cloud Object Storage and fetch the images from the same. Also the app caches these images. Mobile app displays the images obtained as a list of items.
-10. User clicks on one of the list item to see more details. A detail page is shown consisting of image and geo-location marked inside Google Maps.
+8. The data fetched from Cloudant will have references to the images stored in Cloud Object Storage. Mobile app makes a call to MFP adapter to get the images stored in Cloud Object Storage service. Mobile app displays the data obtained from MFP adapter as a list of items.
+9. User clicks on one of the list item to see more details. A detail page is shown consisting of image and geo-location marked inside Google Maps.
 
 
 ### Login through on-premise LDAP server ###
@@ -79,7 +77,7 @@ This Action brings up the Google login screen, where the user can enter his/her 
 * [8. Deploy the MFP Adapters and Test them](#8-deploy-the-mfp-adapters-and-test-them)
   - [8.1 Build and Deploy the MFP adapters](#81-build-and-deploy-the-mfp-adapters)
   - [8.2 Launch MFP dashboard and verify adapter configurations](#82-launch-mfp-dashboard-and-verify-adapter-configurations)
-  - [8.3 Test the JSONStoreCloudantSync adapter](#83-test-the-jsonstorecloudantsync-adapter)
+  
 * [9. Run application on Android phone](https://github.com/IBM/Ionic-MFP-App#step-7-run-application-on-android-phone)
 
 
@@ -226,20 +224,24 @@ Open `MobileFoundationAdapters/SocialLoginAdapter/src/main/adapter-resources/ada
 
 </code></pre>
 
-### 7.7 Specify the Facebook AppID and Google clientID in the Android App
-Add the Facebook App ID and Google clientID obtained in [step 6](#6-register-android-app-with-google-and-facebook-for-social-login) to strings.xml file as shown below
+### 7.7 Specify the Facebook AppID and Google clientID in the Ionic App
+After the facebook and googleplus plugins are installed, check the Facebook App ID and Google webclientID obtained in [step 6](#6-register-android-app-with-google-and-facebook-for-social-login) to config.xml file as shown below
 
-<pre><code>
-&lt;resources&gt;
-    &lt;string name="app_name"&gt;Social Login&lt;/string&gt;    
-    &lt;string name="google_signin"&gt;Sign In With Google&lt;/string&gt;
-    &lt;string name="facebook_signin"&gt;Sign In With Facebook&lt;/string&gt;
-    &lt;string name="facebook_app_id"&gt;Put your Facebook app id here&lt;/string&gt;
-    &lt;string name="google_server_client_id"&gt;Put your Google web client id here&lt;/string&gt;
-&lt;/resources&gt;
-</code></pre>
+```
+<plugin name="cordova-plugin-facebook4" spec="^1.9.1">
+        <variable name="APP_ID" value="226320204812020" />
+        <variable name="APP_NAME" value="MyWard" />
+    </plugin>
+```
+```
+<plugin name="cordova-plugin-googleplus" spec="^5.3.0">
+        <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.618106571370-pr9058fhv2efj4635ertkgbn14tda2ha" />
+    </plugin>
+```
 
+The ```REVERSED_CLIENT_ID``` is the reverse form of the google webclientID obtained in step6.
 
+Also add the webclientID in the auth_handler.ts file in the googlePlusLogin() method.
 
 
 ## Step 8. Deploy the MFP Adapters and Test them
