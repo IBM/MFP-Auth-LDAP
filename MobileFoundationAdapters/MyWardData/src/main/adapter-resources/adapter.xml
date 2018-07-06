@@ -24,14 +24,14 @@ limitations under the License.
 
 	<JAXRSApplicationClass>com.sample.CloudantJavaApplication</JAXRSApplicationClass>
 
-	<property name="account" displayName="Cloudant account" defaultValue=""  />
-	<property name="key" displayName="Cloudant key" defaultValue=""  />
-	<property name="password" displayName="Cloudant password" defaultValue=""  />
+	<property name="account" displayName="Cloudant account" defaultValue="505da9f7-eb2c-4dfe-a682-ee3855cbfc4c-bluemix"  />
+	<property name="key" displayName="Cloudant key" defaultValue="505da9f7-eb2c-4dfe-a682-ee3855cbfc4c-bluemix"  />
+	<property name="password" displayName="Cloudant password" defaultValue="ce834e11cb30072d2525ecc268dcb68b639740250dea8752a1cc7a4cf67bbb5f"  />
 	<property name="DBName" displayName="Cloudant DB name" defaultValue="myward"/>
 
 	<property name="endpointURL" displayName="Cloud Object Storage Endpoint Public URL" defaultValue="https://s3-api.us-geo.objectstorage.softlayer.net"/>
-	<property name="bucketName" displayName="Cloud Object Storage Bucket Name" defaultValue=""/>
-	<property name="serviceId" displayName="Cloud Object Storage Service ID" defaultValue=""  />
-	<property name="apiKey" displayName="Cloud Object Storage API Key" defaultValue=""/>
+	<property name="bucketName" displayName="Cloud Object Storage Bucket Name" defaultValue="org.mycity.myward.storage-dselvar"/>
+	<property name="serviceId" displayName="Cloud Object Storage Service ID" defaultValue="ServiceId-0de05c38-046f-4361-8fc3-8c99b3015ece"  />
+	<property name="apiKey" displayName="Cloud Object Storage API Key" defaultValue="rYGS3v14fV6Pb38XefzoMGowB-XbFlJQbTfLCI4WqdSz"/>
 
 </mfp:adapter>

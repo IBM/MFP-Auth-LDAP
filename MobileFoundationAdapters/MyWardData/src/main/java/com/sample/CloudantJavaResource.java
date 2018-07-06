@@ -35,7 +35,7 @@ import com.ibm.mfp.adapter.api.AdaptersAPI;
 import com.ibm.mfp.adapter.api.OAuthSecurity;
 
 @Path("/")
-@OAuthSecurity(scope = "UserLogin")
+
 public class CloudantJavaResource {
 	/*
 	 * For more info on JAX-RS see https://jax-rs-spec.java.net/nonav/2.0-rev-a/apidocs/index.html
@@ -53,8 +53,22 @@ public class CloudantJavaResource {
 	}
 
 	@POST
+	@OAuthSecurity(scope = "UserLogin")
+	@Path("/userLogin")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addEntry(MyWardGrievance myWardGrievance) throws Exception {
+	public Response addEntry_ul(MyWardGrievance myWardGrievance) throws Exception {
+		if (myWardGrievance != null && myWardGrievance.hasRequiredFields()) {
+			getDB().save(myWardGrievance);
+			return Response.ok().build();
+		} else {
+			return Response.status(400).build();
+		}
+	}
+	@POST
+	@OAuthSecurity(scope = "socialLogin")
+	@Path("/socialLogin")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addEntry_sl(MyWardGrievance myWardGrievance) throws Exception {
 		if (myWardGrievance != null && myWardGrievance.hasRequiredFields()) {
 			getDB().save(myWardGrievance);
 			return Response.ok().build();
@@ -76,16 +90,36 @@ public class CloudantJavaResource {
 	}
 
 	@GET
+	@OAuthSecurity(scope = "socialLogin")
+	@Path("/socialLogin")
 	@Produces("application/json")
-	public Response getAllEntries() throws Exception {
+	public Response getAllEntries_sl() throws Exception {
+		List<MyWardGrievance> entries = getDB().view("_all_docs").includeDocs(true).query(MyWardGrievance.class);
+		return Response.ok(entries).build();
+	}
+	
+	@GET
+	@OAuthSecurity(scope = "UserLogin")
+	@Path("/userLogin")
+	@Produces("application/json")
+	public Response getAllEntries_ul() throws Exception {
 		List<MyWardGrievance> entries = getDB().view("_all_docs").includeDocs(true).query(MyWardGrievance.class);
 		return Response.ok(entries).build();
 	}
 
 	@GET
-	@Path("/objectStorage")
+	@OAuthSecurity(scope = "socialLogin")
+	@Path("/socialLogin/objectStorage")
 	@Produces("application/json")
-	public Response getObjectStorageAccess() throws Exception {
+	public Response getObjectStorageAccess_sl() throws Exception {
+		CloudantJavaApplication app = adaptersAPI.getJaxRsApplication(CloudantJavaApplication.class);
+		return Response.ok(app.getObjectStorageAccess()).build();
+	}
+	@GET
+	@OAuthSecurity(scope = "UserLogin")
+	@Path("/userLogin/objectStorage")
+	@Produces("application/json")
+	public Response getObjectStorageAccess_ul() throws Exception {
 		CloudantJavaApplication app = adaptersAPI.getJaxRsApplication(CloudantJavaApplication.class);
 		return Response.ok(app.getObjectStorageAccess()).build();
 	}
