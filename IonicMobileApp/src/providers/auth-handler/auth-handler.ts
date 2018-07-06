@@ -21,6 +21,8 @@ import { Injectable } from '@angular/core';
 export class AuthHandlerProvider {
   securityCheckName = 'UserLogin';
   userLoginChallengeHandler;
+  securityCheckNamefb='socialLogin';
+  socialLoginChallengeHandler;
   initialized = false;
   username = null;
 
@@ -45,6 +47,10 @@ export class AuthHandlerProvider {
     this.userLoginChallengeHandler.handleChallenge = this.handleChallenge.bind(this);
     this.userLoginChallengeHandler.handleSuccess = this.handleSuccess.bind(this);
     this.userLoginChallengeHandler.handleFailure = this.handleFailure.bind(this);
+    this.socialLoginChallengeHandler = WL.Client.createSecurityCheckChallengeHandler(this.securityCheckNamefb);
+    this.socialLoginChallengeHandler.handleChallenge = this.handleChallenge.bind(this);
+    this.socialLoginChallengeHandler.handleSuccess = this.handleSuccess.bind(this);
+    this.socialLoginChallengeHandler.handleFailure = this.handleFailure.bind(this);
   }
 
   setHandleChallengeCallback(onHandleChallenge) {
@@ -107,6 +113,15 @@ export class AuthHandlerProvider {
         console.log('--> AuthHandler: obtainAccessToken onFailure: ' + JSON.stringify(error));
       }
     );
+    WLAuthorizationManager.obtainAccessToken('socialLogin')
+    .then(
+      (accessToken) => {
+        console.log('--> AuthHandler: obtainAccessToken onSuccess');
+      },
+      (error) => {
+        console.log('--> AuthHandler: obtainAccessToken onFailure: ' + JSON.stringify(error));
+      }
+    );
   }
 
   login(username, password) {
@@ -118,6 +133,27 @@ export class AuthHandlerProvider {
       // https://stackoverflow.com/questions/20279484/how-to-access-the-correct-this-inside-a-callback
       var self = this;
       WLAuthorizationManager.login(this.securityCheckName, {'username':username, 'password':password})
+      .then(
+        (success) => {
+          console.log('--> AuthHandler: login success');
+        },
+        (failure) => {
+          console.log('--> AuthHandler: login failure: ' + JSON.stringify(failure));
+          self.loginFailureCallback(failure.errorMsg);
+        }
+      );
+    }
+  }
+
+  loginWithFb(accessToken){
+    console.log('--> AuthHandler loginwithfb called ');
+    var credentials = { 'token': accessToken, 'vendor': 'facebook' };
+    if (this.isChallenged) {
+      this.userLoginChallengeHandler.submitChallengeAnswer(credentials);
+    } else {
+      // https://stackoverflow.com/questions/20279484/how-to-access-the-correct-this-inside-a-callback
+      var self = this;
+      WLAuthorizationManager.login(this.securityCheckNamefb, credentials)
       .then(
         (success) => {
           console.log('--> AuthHandler: login success');

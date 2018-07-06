@@ -19,6 +19,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { AuthHandlerProvider } from '../../providers/auth-handler/auth-handler';
 import { HomePage } from '../home/home';
+import { Facebook } from '@ionic-native/facebook';
 
 @Component({
   selector: 'page-login',
@@ -32,7 +33,7 @@ export class LoginPage {
   fixedUsername = null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public alertCtrl: AlertController, public authHandler:AuthHandlerProvider, public loadingCtrl: LoadingController) {
+    public alertCtrl: AlertController, public authHandler:AuthHandlerProvider, public loadingCtrl: LoadingController, private fb: Facebook) {
     console.log('--> LoginPage constructor() called');
 
     this.isPushed = navParams.get('isPushed');
@@ -83,6 +84,24 @@ export class LoginPage {
     this.loader.present().then(() => {
       this.authHandler.login(username, password);
     });
+  }
+
+  fbLogin() {
+    this.fb.login(['public_profile', 'user_friends', 'email'])
+      .then(res => {
+        if(res.status === "connected") {
+          var accessToken = res.authResponse.accessToken;
+          console.log(accessToken);
+          this.loader = this.loadingCtrl.create({
+            content: 'Signining in. Please wait ...',
+            dismissOnPageChange: true
+          });
+          this.loader.present().then(() => {
+            this.authHandler.loginWithFb(accessToken);
+          });
+      }
+    })
+    .catch(e => console.log('Error logging into Facebook', e));
   }
 
   showAlert(alertTitle, alertMessage) {

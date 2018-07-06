@@ -20,7 +20,7 @@ limitations under the License.
 </ion-header>
 
 <ion-content padding>
-  <form (submit)="processForm()" [formGroup]="form">
+  <form [formGroup]="form">
     <ion-list>
       <ion-item>
         <ion-label fixed>Username</ion-label>
@@ -32,7 +32,10 @@ limitations under the License.
       </ion-item>
     </ion-list>
     <div padding>
-      <button ion-button block type="submit">Sign In</button>
+      <button ion-button block (click)="processForm()">Sign In</button>
+    </div>
+    <div padding>
+      <button ion-button block (click)="fbLogin()">Facebook Login</button>
     </div>
   </form>
 </ion-content>
