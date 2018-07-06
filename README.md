@@ -25,14 +25,16 @@ When you have completed this code pattern, you will understand:
 The diagram above illustrates the login flow (here described with Google but also relevant to Facebook or other social providers). The diagram shows that the trigger to call social providers is initiated by the client.
 
 1. User launches the mobile app, and clicks on 'Google Sign In' button in the login screen.
-2. The Google Android SDK calls the Google Sign-In REST service.
+This Action brings up the Google login screen, where the user can enter his/her credentials.
+2. On-click of the login button in the Google login screen, Google Android SDK calls the Google Sign-In REST service.
 3. The access token from Google is received and the App calls the login API, with scope social-login and credentials (vendor + token).
 4. The MFP SDK sends the credentials and scope to the Authorization Server API. The Authorization API calls the mapped security check social-login to validate the credentials.
 5. The social-login security check validates the Google token with its web client identifier from the security check configuration. The social-login returns the authenticated user to the Authorization Server API.
 6. The Authorization Server API returns the authenticated user data to the MFP SDK. The MFPSDK calls the handleSuccess method in the challenge handler with the authenticated user data. The MFP SDK calls login success callback on the app.
 7. If user authentication succeeds, mobile app proceeds to show the home page. As part of this, it makes a call to MFP adapter to fetch the data from Cloudant NoSQL database. MFP adapter fetches the data from Cloudant and returns it to the mobile app. 
-8. The data fetched from Cloudant will have references to the images stored in Cloud Object Storage. Mobile app makes a call to MFP adapter to get the images stored in Cloud Object Storage service. Mobile app displays the data obtained from MFP adapter as a list of items.
-9. User clicks on one of the list item to see more details. A detail page is shown consisting of image and geo-location marked inside Google Maps.
+8. The data fetched from Cloudant will have references to the images stored in Cloud Object Storage. Mobile app makes a call to MFP adapter to get the Authorization token for interacting with Cloud Object Storage service. MFP adapter makes a call to Cloud Object Storage service's token manager endpoint to get the Authorization token and returns it to the mobile app.
+9.  Mobile app uses this token to further interact with the Cloud Object Storage and fetch the images from the same. Also the app caches these images. Mobile app displays the images obtained as a list of items.
+10. User clicks on one of the list item to see more details. A detail page is shown consisting of image and geo-location marked inside Google Maps.
 
 
 ### Login through on-premise LDAP server ###
