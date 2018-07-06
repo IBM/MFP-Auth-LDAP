@@ -113,7 +113,7 @@ export class AuthHandlerProvider {
   // Reference: https://mobilefirstplatform.ibmcloud.com/tutorials/en/foundation/8.0/authentication-and-security/user-authentication/javascript/
   checkIsLoggedIn() {
     console.log('--> AuthHandler checkIsLoggedIn called');
-    WLAuthorizationManager.obtainAccessToken('RestrictedData')
+    WLAuthorizationManager.obtainAccessToken('UserLogin')
     .then(
       (accessToken) => {
         console.log('--> AuthHandler: obtainAccessToken onSuccess');
@@ -202,7 +202,7 @@ export class AuthHandlerProvider {
  
     this.googlePlus.login({
       'scopes': '',
-      'webClientId': '618106571370-pr9058fhv2efj4635ertkgbn14tda2ha.apps.googleusercontent.com',
+      'webClientId': 'your-app-webclient-id.apps.googleusercontent.com',
       'offline': true
     })
 	  .then(res => {        
