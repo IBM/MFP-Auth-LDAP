@@ -31,8 +31,9 @@ The diagram above illustrates the login flow (here described with Google but als
 5. The social-login security check validates the Google token with its web client identifier from the security check configuration. The social-login returns the authenticated user to the Authorization Server API.
 6. The Authorization Server API returns the authenticated user data to the MFP SDK. The MFPSDK calls the handleSuccess method in the challenge handler with the authenticated user data. The MFP SDK calls login success callback on the app.
 7. If user authentication succeeds, mobile app proceeds to show the home page. As part of this, it makes a call to MFP adapter to fetch the data from Cloudant NoSQL database. MFP adapter fetches the data from Cloudant and returns it to the mobile app. 
-8. The data fetched from Cloudant will have references to the images stored in Cloud Object Storage. Mobile app makes a call to MFP adapter to get the images stored in Cloud Object Storage service. Mobile app displays the data obtained from MFP adapter as a list of items.
-9. User clicks on one of the list item to see more details. A detail page is shown consisting of image and geo-location marked inside Google Maps.
+8. The data fetched from Cloudant will have references to the images stored in Cloud Object Storage. Mobile app makes a call to MFP adapter to get the Authorization token for interacting with Cloud Object Storage service. MFP adapter makes a call to Cloud Object Storage service's token manager endpoint to get the Authorization token and returns it to the mobile app.
+9.  Mobile app initializes image-caching plugin and fetches the images  from Object Storage. Mobile app displays the data obtained from MFP adapter as a list of items.
+10. User clicks on one of the list item to see more details. A detail page is shown consisting of image and geo-location marked inside Google Maps.
 
 
 ### Login through on-premise LDAP server ###
@@ -45,8 +46,9 @@ The diagram above illustrates the login flow (here described with Google but als
 4. The enterprise LDAP server validates the credentials and sends the response back to the MFP server through the secure gateway client.
 5. The MFP server returns the authenticated user data to the MFP SDK. The MFP SDK calls the handleSuccess method in the challenge handler with the authenticated user data. The MFP SDK calls login success callback on the app.
 6. If user authentication succeeds, mobile app proceeds to show the home page. As part of this, it makes a call to MFP adapter to fetch the data from Cloudant NoSQL database. MFP adapter fetches the data from Cloudant and returns it to the mobile app.
-7. The data fetched from Cloudant will have references to the images stored in Cloud Object Storage. Mobile app makes a call to MFP adapter to get the images stored in Cloud Object Storage service. Mobile app displays the data obtained from MFP adapter as a list of items.
-8. User clicks on one of the list item to see more details. A detail page is shown consisting of image and geo-location marked inside Google Maps.
+7. The data fetched from Cloudant will have references to the images stored in Cloud Object Storage. Mobile app makes a call to MFP adapter to get the Authorization token for interacting with Cloud Object Storage service. MFP adapter makes a call to Cloud Object Storage service's token manager endpoint to get the Authorization token and returns it to the mobile app.
+8. Mobile app initializes image-caching plugin and fetches the images  from Object Storage. Mobile app displays the data obtained from MFP adapter as a list of items.
+9. User clicks on one of the list item to see more details. A detail page is shown consisting of image and geo-location marked inside Google Maps.
 
 
 
