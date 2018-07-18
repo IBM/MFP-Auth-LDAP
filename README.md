@@ -230,17 +230,32 @@ Open `MobileFoundationAdapters/SocialLoginAdapter/src/main/adapter-resources/ada
 </code></pre>
 
 ### 7.7 Specify the Facebook AppID and Google clientID in the Ionic App
-After the facebook and googleplus plugins are installed, check the Facebook App ID and Google webclientID obtained in [step 6](#6-register-android-app-with-google-and-facebook-for-social-login) to config.xml file as shown below
+Install the Cordova and Ionic Facebook plugin using following commands
+
+$ ionic cordova plugin add cordova-plugin-facebook4 --variable APP_ID="your_appid_from_step6" --variable APP_NAME="your application name"
+
+$ npm install --save @ionic-native/facebook
+
+
+Install the Cordova and Ionic GooglePlus plugin using following commands
+
+$ ionic cordova plugin add cordova-plugin-googleplus --variable REVERSED_CLIENT_ID="reverseclientid_from_step6"
+
+$ npm install --save @ionic-native/google-plus
+
+
+
+After the facebook and googleplus plugins are installed, check if the Facebook App ID and Google webclientID obtained in [step 6](#6-register-android-app-with-google-and-facebook-for-social-login) are present in the config.xml file as shown below
 
 ```
 <plugin name="cordova-plugin-facebook4" spec="^1.9.1">
-        <variable name="APP_ID" value="226320204812020" />
+        <variable name="APP_ID" value="your_appid" />
         <variable name="APP_NAME" value="MyWard" />
     </plugin>
 ```
 ```
 <plugin name="cordova-plugin-googleplus" spec="^5.3.0">
-        <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.618106571370-pr9058fhv2efj4635ertkgbn14tda2ha" />
+        <variable name="REVERSED_CLIENT_ID" value="your_reverse_clientid" />
     </plugin>
 ```
 
