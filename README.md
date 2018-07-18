@@ -317,7 +317,11 @@ Please see instructions for [debugging Android hybrid app using Chrome Developer
 
 # References
 
-* ...
+*	[Connecting to LDAP servers with IBM MobileFirst Foundation 8.0](https://mobilefirstplatform.ibmcloud.com/blog/2016/07/17/connecting-to-LDAP-with-ibm-mobilefirst-foundation/)
+*	[Implementing Social Login Authentication with IBM MobileFirst Platform Foundation 8.0](https://mobilefirstplatform.ibmcloud.com/blog/2016/04/06/social-login-with-ibm-mobilefirst-platform-foundation/)
+*	[Authentication and Security](https://mobilefirstplatform.ibmcloud.com/tutorials/en/foundation/8.0/authentication-and-security/)
+*	[Facebook Login](https://developers.facebook.com/docs/facebook-login)
+*	[Google SignIn](https://developers.google.com/identity/)
 
 # License
 [Apache 2.0](LICENSE)
