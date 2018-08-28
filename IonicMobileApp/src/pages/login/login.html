@@ -34,17 +34,21 @@ limitations under the License.
     <div padding>
       <button ion-button block (click)="processForm()">Sign In</button>
     </div>
-    <div padding>
-      <button ion-button block (click)="fbLogin()" icon-start>
-        <ion-icon name="logo-facebook"></ion-icon>
-        Facebook Login
-        </button>
-    </div>
-	<div padding>
-      <button ion-button block (click)="googleLogin()" icon-start>
-          <ion-icon name="logo-googleplus"></ion-icon>
-        Google Login
-      </button>
-    </div>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+            <button ion-button full (click)="fbLogin()">
+                <ion-icon name="logo-facebook"></ion-icon>
+                Facebook Sign In
+              </button>  
+        </ion-col>
+        <ion-col col-6>
+            <button ion-button full (click)="googleLogin()">
+                <ion-icon name="logo-googleplus"></ion-icon>
+                Google Sign In
+              </button> 
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </form>
 </ion-content>

@@ -38,6 +38,7 @@ export class AuthHandlerProvider {
   googleLoginStatus = null;
   fbLoginStatus = null;
   loader: any;
+  userData: any;
   
 
   constructor(public fb: Facebook, public googlePlus: GooglePlus,public loadingCtrl: LoadingController) {
@@ -113,7 +114,7 @@ export class AuthHandlerProvider {
   // Reference: https://mobilefirstplatform.ibmcloud.com/tutorials/en/foundation/8.0/authentication-and-security/user-authentication/javascript/
   checkIsLoggedIn() {
     console.log('--> AuthHandler checkIsLoggedIn called');
-    WLAuthorizationManager.obtainAccessToken('UserLogin')
+    WLAuthorizationManager.obtainAccessToken('RestrictedData')
     .then(
       (accessToken) => {
         console.log('--> AuthHandler: obtainAccessToken onSuccess');
@@ -159,7 +160,10 @@ export class AuthHandlerProvider {
     this.fb.login(['public_profile', 'user_friends', 'email'])
     .then(res => {
       if(res.status === "connected") {
-         
+        this.fb.api('me?fields=id,name,email,first_name', []).then(profile => {
+          this.userData = {email: profile['email'], first_name: profile['first_name']}
+          this.username = this.userData.email;
+        });
         var accessToken = res.authResponse.accessToken;
         console.log(accessToken);
         this.loader = this.loadingCtrl.create({
@@ -202,11 +206,12 @@ export class AuthHandlerProvider {
  
     this.googlePlus.login({
       'scopes': '',
-      'webClientId': 'your-app-webclient-id.apps.googleusercontent.com',
+      'webClientId': '618106571370-pr9058fhv2efj4635ertkgbn14tda2ha.apps.googleusercontent.com',
       'offline': true
     })
 	  .then(res => {        
           console.log(res);
+          this.username = res.email;
           var accessToken = res.idToken;
           console.log(accessToken);
           this.loader = this.loadingCtrl.create({

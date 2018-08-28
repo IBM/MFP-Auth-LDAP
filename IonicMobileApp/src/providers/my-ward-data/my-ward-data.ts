@@ -18,6 +18,7 @@
 import { Injectable } from '@angular/core';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { AuthHandlerProvider } from '../../providers/auth-handler/auth-handler';
+import { AlertController } from 'ionic-angular';
 
 @Injectable()
 export class MyWardDataProvider {
@@ -27,7 +28,7 @@ export class MyWardDataProvider {
   
 
 
-  constructor(private transfer: FileTransfer, private authHandler:AuthHandlerProvider) {
+  constructor(private transfer: FileTransfer, private authHandler:AuthHandlerProvider,private alertCtrl: AlertController) {
     console.log('--> MyWardDataProvider constructor() called');
   }
 
@@ -51,12 +52,27 @@ export class MyWardDataProvider {
         (response) => {
           console.log('--> MyWardDataProvider loaded data from adapter\n', response);
           this.data = response.responseJSON;
+          if(response.responseJSON.length == 0)
+          {
+            this.showAlert('Problem List','No problems reported in your area');
+          }
           resolve(this.data);
         }, (failure) => {
           console.log('--> MyWardDataProvider failed to load data\n', JSON.stringify(failure));
           reject(failure);
         })
     });
+  }
+
+  showAlert(alertTitle, alertMessage) {
+    let prompt = this.alertCtrl.create({
+      title: alertTitle,
+      message: alertMessage,
+      buttons: [{
+          text: 'Ok',
+      }]
+    });
+    prompt.present();
   }
 
   getObjectStorageAccess() {

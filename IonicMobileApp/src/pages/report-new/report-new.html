@@ -30,7 +30,7 @@ limitations under the License.
       <ion-input type="text" [(ngModel)]="address"></ion-input>
     </ion-item>
   </ion-list>
-  <img [src]="capturedImage" *ngIf="capturedImage" />
+  <img class="displayed" [src]="capturedImage" *ngIf="capturedImage" height="100px" width="100px"/>
   <ion-grid>
     <ion-row>
       <ion-col col-6>
@@ -47,9 +47,10 @@ limitations under the License.
       </ion-col>
     </ion-row>
   </ion-grid>
-  <div id="map"></div>
+  
   <button ion-button full (click)="submit()">
     <ion-icon name="cloud-upload"></ion-icon>
     Submit
   </button>
+  <div id="map"></div>
 </ion-content>
