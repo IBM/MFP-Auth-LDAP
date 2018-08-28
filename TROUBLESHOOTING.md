@@ -37,6 +37,8 @@ $ ./adb shell ps|grep org.mycity.myward | cut -c10-15
 
 ## Problems with production version of the app on Android
 
+Please refer to Troubleshooting guide of the base pattern for more known issues - https://github.com/IBM/Ionic-MFP-App/blob/master/TROUBLESHOOTING.md
+
 1) Problem:
 
 If you are using android studio to build the app and on windows, you may face the following issue "Error: Failed to crunch file "C:\CodePattern\LDAP-pattern\IonicMobileApp\pl...."

@@ -42,8 +42,8 @@ The diagram above illustrates the login flow (here described with Google but als
 
 1. User launches the mobile app, and clicks on the login button in the login screen.
 2. Mobile app invokes the security check adapter deployed on Mobile foundation server to validate the user credentials. 
-3. In this case, the security check adapter is a LDAP adapter which connects to the on-premise enterprise LDAP server through a secure gateway client, to do the user credential validation.
-4. The enterprise LDAP server validates the credentials and sends the response back to the MFP server through the secure gateway client.
+3. In this case, the security check adapter connects to the on-premise enterprise LDAP server through a secure gateway, to do the user credential validation.
+4. The enterprise LDAP server validates the credentials and sends the response back to the MFP server through the secure gateway.
 5. The MFP server returns the authenticated user data to the MFP SDK. The MFP SDK calls the handleSuccess method in the challenge handler with the authenticated user data. The MFP SDK calls login success callback on the app.
 6. If user authentication succeeds, mobile app proceeds to show the home page. As part of this, it makes a call to MFP adapter to fetch the data from Cloudant NoSQL database. MFP adapter fetches the data from Cloudant and returns it to the mobile app.
 7. The data fetched from Cloudant will have references to the images stored in Cloud Object Storage. Mobile app makes a call to MFP adapter to get the Authorization token for interacting with Cloud Object Storage service. MFP adapter makes a call to Cloud Object Storage service's token manager endpoint to get the Authorization token and returns it to the mobile app.
