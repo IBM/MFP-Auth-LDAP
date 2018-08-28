@@ -41,7 +41,7 @@ The diagram above illustrates the login flow (here described with Google but als
 <img src="doc/source/images/ldaplogin.png" alt="Architecture diagram - Login through on-premise LDAP server" width="1024" border="10" />
 
 1. User launches the mobile app, and clicks on the login button in the login screen.
-2. Mobile app sends the user credentials to MFP server for validation. MFP server invokes the security adapter logic to validate user credentials. 
+2. Mobile app invokes the security check adapter deployed on Mobile foundation server to validate the user credentials. 
 3. In this case, the security check adapter is a LDAP adapter which connects to the on-premise enterprise LDAP server through a secure gateway client, to do the user credential validation.
 4. The enterprise LDAP server validates the credentials and sends the response back to the MFP server through the secure gateway client.
 5. The MFP server returns the authenticated user data to the MFP SDK. The MFP SDK calls the handleSuccess method in the challenge handler with the authenticated user data. The MFP SDK calls login success callback on the app.
