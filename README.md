@@ -53,8 +53,8 @@ The diagram above illustrates the login flow (here described with Google but als
 
 
 ## Included Components
-* [Cloudant NoSQL DB](https://console.ng.bluemix.net/catalog/services/cloudant-nosql-db): A fully managed data layer designed for modern web and mobile applications that leverages a flexible JSON schema.
-* [Cloud Object Storage](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage): A highly scalable cloud storage service, designed for high durability, resiliency and security.
+* [Cloudant NoSQL DB](https://console.bluemix.net/catalog/services/cloudant): A fully managed data layer designed for modern web and mobile applications that leverages a flexible JSON schema.
+* [Cloud Object Storage](https://console.bluemix.net/catalog/services/cloud-object-storage): A highly scalable cloud storage service, designed for high durability, resiliency and security.
 * [Mobile Foundation](https://console.bluemix.net/catalog/services/mobile-foundation): A scalable mobile access gateway powered by the market-leading IBM Mobile Foundation Technology. The service offers a comprehensive set of mobile backend capabilities such as, App life cycle, Push, Analytics, Feature Toggle, Security and Authentication and offline synch.
 * [Secure Gateway](https://console.bluemix.net/catalog/services/secure-gateway):  A quick, easy, and secure solution that provides a persistent connection between on-premises or third party cloud environments and the IBM Cloud.
 
@@ -65,25 +65,43 @@ The diagram above illustrates the login flow (here described with Google but als
 
 # Steps
 
-* [1. Setup Ionic and MFP CLI](https://github.com/IBM/Ionic-MFP-App#step-1-setup-ionic-and-mfp-cli)
-* [2. Create Cloudant database and populate it with sample data](https://github.com/IBM/Ionic-MFP-App#step-2-create-cloudant-database-and-populate-it-with-sample-data)
-* [3. Create IBM Cloud Object Storage service and populate it with sample data](https://github.com/IBM/Ionic-MFP-App#step-3-create-ibm-cloud-object-storage-service-and-populate-it-with-sample-data)
-* [4. Create Mobile Foundation service and configure MFP CLI](https://github.com/IBM/Ionic-MFP-App#step-4-create-mobile-foundation-service-and-configure-mfp-cli)
-* [5. Setup LDAP server and Secure Gateway Client](#step-5-setup-ldap-server-and-secure-gateway-client)
-* [6. Register Android App with Google and Facebook for Social Login ](#step-6-register-android-app-with-google-and-facebook-for-social-login)
-* [7. Download source repo and customize](#step-7-download-source-repo-and-customize)
+[1. Setup Ionic and MFP CLI](https://github.com/IBM/Ionic-MFP-App#step-1-setup-ionic-and-mfp-cli)
+
+[2. Create Cloudant database and populate it with sample data](https://github.com/IBM/Ionic-MFP-App#step-2-create-cloudant-database-and-populate-it-with-sample-data)
+
+[3. Create IBM Cloud Object Storage service and populate it with sample data](https://github.com/IBM/Ionic-MFP-App#step-3-create-ibm-cloud-object-storage-service-and-populate-it-with-sample-data)
+
+[4. Create Mobile Foundation service and configure MFP CLI](https://github.com/IBM/Ionic-MFP-App#step-4-create-mobile-foundation-service-and-configure-mfp-cli)
+
+[5. Setup LDAP server and Secure Gateway Client](#step-5-setup-ldap-server-and-secure-gateway-client)
+
+[6. Register Android App with Google and Facebook for Social Login ](#step-6-register-android-app-with-google-and-facebook-for-social-login)
+
+[7. Download source repo and customize](#step-7-download-source-repo-and-customize)
+
   - [7.1 Clone repo](#step-71-clone-repo)
+  
   - [7.2 Update App ID, Name and Description](#72-update-app-id-name-and-description)
+  
   - [7.3 Specify Cloudant credentials in MFP adapter](#73-specify-cloudant-credentials-in-mfp-adapter)
+  
   - [7.4 Specify Cloud Object Storage credentials in MFP Adapter](#74-specify-cloud-object-storage-credentials-in-mfp-adapter)
+  
   - [7.5  Specify LDAP Credentials in MFP Adapter](#75-specify-ldap-credentials-in-mfp-adapter)
+  
   - [7.6 Specify Google Sign-in credentials in MFP Adapter](#76-specify-google-sign-in-credentials-in-mfp-adapter)
+  
   - [7.7 Specify the Facebook AppID and Google clientID in the Ionic App](#77-specify-the-facebook-appid-and-google-clientid-in-the-ionic-app)
-* [8. Deploy the MFP Adapters and Test them](#8-deploy-the-mfp-adapters-and-test-them)
+  
+  
+[8. Deploy the MFP Adapters and Test them](#8-deploy-the-mfp-adapters-and-test-them)
+
   - [8.1 Build and Deploy the MFP adapters](#81-build-and-deploy-the-mfp-adapters)
+  
   - [8.2 Launch MFP dashboard and verify adapter configurations](#82-launch-mfp-dashboard-and-verify-adapter-configurations)
   
-* [9. Run application on Android phone](https://github.com/IBM/Ionic-MFP-App#step-7-run-application-on-android-phone)
+  
+[9. Run application on Android phone](https://github.com/IBM/Ionic-MFP-App#step-7-run-application-on-android-phone)
 
 
 ## Prerequisite steps
@@ -93,9 +111,7 @@ This project builds on top of https://github.com/IBM/Ionic-MFP-App. Run followin
  * [Step 2. Create Cloudant database and populate it with sample data](https://github.com/IBM/Ionic-MFP-App#step-2-create-cloudant-database-and-populate-it-with-sample-data)
  * [Step 3. Create IBM Cloud Object Storage service and populate it with sample data](https://github.com/IBM/Ionic-MFP-App#step-3-create-ibm-cloud-object-storage-service-and-populate-it-with-sample-data)
  * [Step 4. Create Mobile Foundation service and configure MFP CLI](https://github.com/IBM/Ionic-MFP-App#step-4-create-mobile-foundation-service-and-configure-mfp-cli)
- * [Step 5. Setup LDAP server and Secure Gateway Client](#step-5-setup-ldap-server-and-secure-gateway-client)
- * [Step 6. Register Android App for Google and Facebook Social login](#step-6-register-android-app-for-google-and-facebook-social-login)
-
+ 
 
 ## Step 5. Setup LDAP server and Secure Gateway Client
 ### 5.1 Setup LDAP server
@@ -106,7 +122,7 @@ Add a new entry with your details, for example,
 
 * cn: Shiva Kumar H R
 * sn: ShivaHR
-* description: Bluemix Solution Architect
+* description: Cloud Solution Architect
 * givenname: Shiva
 * mail: shivahr@in.ibm.com
 * uid: shivahr
@@ -114,11 +130,11 @@ Add a new entry with your details, for example,
 
 ### 5.2 Setup Secure Gateway Client
 
-To be able to access your on-premise LDAP server from within the Mobile Foundation server running on Bluemix, we must first create a secure gateway connection between the on-premise LDAP server and Bluemix as per following steps:
+To be able to access your on-premise LDAP server from within the Mobile Foundation server running on IBM Cloud, we must first create a secure gateway connection between the on-premise LDAP server and IBM Cloud as per following steps:
 
  
 
-1. Log on to Bluemix. Click on "Catalog". Under Categories, select "Services -> Integrate", and then click on "Secure Gateway". Click "Create".
+1. Log on to IBM Cloud. Click on "Catalog". Under Categories, select "Services -> Integrate", and then click on "Secure Gateway". Click "Create".
 
 2. Inside the Secure Gateway service dashboard, click "Add Gateway". Specify a name and click "Add Gateway". Click the icon for the gateway that you just added.
 
@@ -231,18 +247,18 @@ Open `MobileFoundationAdapters/SocialLoginAdapter/src/main/adapter-resources/ada
 
 ### 7.7 Specify the Facebook AppID and Google clientID in the Ionic App
 Install the Cordova and Ionic Facebook plugin using following commands
-
+```
 $ ionic cordova plugin add cordova-plugin-facebook4 --variable APP_ID="your_appid_from_step6" --variable APP_NAME="your application name"
 
 $ npm install --save @ionic-native/facebook
-
+```
 
 Install the Cordova and Ionic GooglePlus plugin using following commands
-
+```
 $ ionic cordova plugin add cordova-plugin-googleplus --variable REVERSED_CLIENT_ID="reverseclientid_from_step6"
 
 $ npm install --save @ionic-native/google-plus
-
+```
 
 
 After the facebook and googleplus plugins are installed, check if the Facebook App ID and Google webclientID obtained in [step 6](#6-register-android-app-with-google-and-facebook-for-social-login) are present in the config.xml file as shown below
@@ -323,7 +339,7 @@ Verify MFP Adapter configuration as below:
 ## Step 9. Run application on Android phone
 
 Follow the instructions in [Step 7](https://github.com/IBM/Ionic-MFP-App#step-7-run-application-on-android-phone) of base project to run the application on Android phone.
-Instead of a plain UserLogin, test the Google Sign-in button or FB sign-in button or the LDAPlogin button.Based on the button chosen, the user authentication validation mechanism will vary.
+Instead of a plain UserLogin, test the Google Sign-in button or FB sign-in button or the LDAPlogin button.Based on the button chosen, the user authentication validation mechanism will vary. Below screenshot shows the different pages of the application.
 
  <img src="doc/source/images/MyWardAppLoginPage.png" alt="MyWard App - Login Page" width="240" border="10" />
 
