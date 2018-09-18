@@ -206,7 +206,7 @@ Open `MobileFoundationAdapters/MyWardData/src/main/adapter-resources/adapter.xml
 
 ### 7.5 Specify LDAP Credentials in MFP Adapter
 
-Open `MobileFoundationAdapters/LDAPLoginAdapter/src/main/adapter-resources/adapter.xml' and update the following properties to point to the Secure Gateway client created in [step 5.2](#52-setup-secure-gateway-client)
+Open `MobileFoundationAdapters/LDAPLoginAdapter/src/main/adapter-resources/adapter.xml` and update the following properties to point to the Secure Gateway client created in [step 5.2](#52-setup-secure-gateway-client)
 <pre><code>
 &lt;property name="ldapUserAttribute" defaultValue="uid" displayName="The LDAP attribute for username"/&gt;
 		&lt;property name="ldapNameAttribute" defaultValue="cn" displayName="The LDAP attribute for display name"/&gt;
@@ -218,7 +218,7 @@ Open `MobileFoundationAdapters/LDAPLoginAdapter/src/main/adapter-resources/adapt
 </code></pre>
 
 ### 7.6 Specify Google Sign-in credentials in MFP Adapter
-Open `MobileFoundationAdapters/SocialLoginAdapter/src/main/adapter-resources/adapter.xml ' and update the google client-id created in [step 6](#6-register-android-app-with-google-and-facebook-for-social-login) as shown below
+Open `MobileFoundationAdapters/SocialLoginAdapter/src/main/adapter-resources/adapter.xml` and update the google client-id created in [step 6](#6-register-android-app-with-google-and-facebook-for-social-login) as shown below
 
 <pre><code>
 &lt;property name="google.clientId"
