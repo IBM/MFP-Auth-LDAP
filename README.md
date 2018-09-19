@@ -13,7 +13,7 @@ When you have completed this code pattern, you will understand:
 * How to achieve user authentication in mobile apps where the user repository is an enterprise LDAP server.
 * How to achieve user authentication in mobile apps using Social login mechanisms like Google or Facebook.
 * How to write MFP adapters that fetch data from Cloud Object Storage service and Cloudant service.
-* How to capture user’s geo-location & image from camera and show in Google Maps
+* How to capture user’s geo-location & image from camera and show in Google Maps.
 
 
 
@@ -79,26 +79,26 @@ The diagram above illustrates the login flow (here described with Google but als
 
 [7. Download source repo and customize](#step-7-download-source-repo-and-customize)
 
-  - [7.1 Clone repo](#step-71-clone-repo)
+  * [7.1 Clone repo](#71-clone-repo)
   
-  - [7.2 Update App ID, Name and Description](#72-update-app-id-name-and-description)
+  * [7.2 Update App ID, Name and Description](#72-update-app-id-name-and-description)
   
-  - [7.3 Specify Cloudant credentials in MFP adapter](#73-specify-cloudant-credentials-in-mfp-adapter)
+  * [7.3 Specify Cloudant credentials in MFP adapter](#73-specify-cloudant-credentials-in-mfp-adapter)
   
-  - [7.4 Specify Cloud Object Storage credentials in MFP Adapter](#74-specify-cloud-object-storage-credentials-in-mfp-adapter)
+  * [7.4 Specify Cloud Object Storage credentials in MFP Adapter](#74-specify-cloud-object-storage-credentials-in-mfp-adapter)
   
-  - [7.5  Specify LDAP Credentials in MFP Adapter](#75-specify-ldap-credentials-in-mfp-adapter)
+  * [7.5  Specify LDAP Credentials in MFP Adapter](#75-specify-ldap-credentials-in-mfp-adapter)
   
-  - [7.6 Specify Google Sign-in credentials in MFP Adapter](#76-specify-google-sign-in-credentials-in-mfp-adapter)
+  * [7.6 Specify Google Sign-in credentials in MFP Adapter](#76-specify-google-sign-in-credentials-in-mfp-adapter)
   
-  - [7.7 Specify the Facebook AppID and Google clientID in the Ionic App](#77-specify-the-facebook-appid-and-google-clientid-in-the-ionic-app)
+  * [7.7 Specify the Facebook AppID and Google clientID in the Ionic App](#77-specify-the-facebook-appid-and-google-clientid-in-the-ionic-app)
   
   
-[8. Deploy the MFP Adapters and Test them](#8-deploy-the-mfp-adapters-and-test-them)
+[8. Deploy the MFP Adapters and Test](#step8-deploy-the-mfp-adapters-and-test)
 
-  - [8.1 Build and Deploy the MFP adapters](#81-build-and-deploy-the-mfp-adapters)
-  
-  - [8.2 Launch MFP dashboard and verify adapter configurations](#82-launch-mfp-dashboard-and-verify-adapter-configurations)
+   * [8.1 Build and Deploy the MFP adapters](#81-build-and-deploy-the-mfp-adapters)
+	
+   * [8.2 Launch MFP dashboard and verify adapter configurations](#82-launch-mfp-dashboard-and-verify-adapter-configurations)
   
   
 [9. Run application on Android phone](https://github.com/IBM/Ionic-MFP-App#step-7-run-application-on-android-phone)
@@ -107,10 +107,13 @@ The diagram above illustrates the login flow (here described with Google but als
 ## Prerequisite steps
 This project builds on top of https://github.com/IBM/Ionic-MFP-App. Run following steps from that [base project](https://github.com/IBM/Ionic-MFP-App) to provision the needed mobile backend services from IBM Cloud and populate them with sample data, as well as to setup Ionic and MFP CLI on your development machine.
 
- * [Step 1. Setup Ionic and MFP CLI](https://github.com/IBM/Ionic-MFP-App#step-1-setup-ionic-and-mfp-cli) 
- * [Step 2. Create Cloudant database and populate it with sample data](https://github.com/IBM/Ionic-MFP-App#step-2-create-cloudant-database-and-populate-it-with-sample-data)
- * [Step 3. Create IBM Cloud Object Storage service and populate it with sample data](https://github.com/IBM/Ionic-MFP-App#step-3-create-ibm-cloud-object-storage-service-and-populate-it-with-sample-data)
- * [Step 4. Create Mobile Foundation service and configure MFP CLI](https://github.com/IBM/Ionic-MFP-App#step-4-create-mobile-foundation-service-and-configure-mfp-cli)
+   [Step 1. Setup Ionic and MFP CLI](https://github.com/IBM/Ionic-MFP-App#step-1-setup-ionic-and-mfp-cli) 
+   
+   [Step 2. Create Cloudant database and populate it with sample data](https://github.com/IBM/Ionic-MFP-App#step-2-create-cloudant-database-and-populate-it-with-sample-data)
+   
+   [Step 3. Create IBM Cloud Object Storage service and populate it with sample data](https://github.com/IBM/Ionic-MFP-App#step-3-create-ibm-cloud-object-storage-service-and-populate-it-with-sample-data)
+   
+   [Step 4. Create Mobile Foundation service and configure MFP CLI](https://github.com/IBM/Ionic-MFP-App#step-4-create-mobile-foundation-service-and-configure-mfp-cli)
  
 
 ## Step 5. Setup LDAP server and Secure Gateway Client
@@ -120,13 +123,13 @@ If you do not have any LDAP server setup, you could try installing apacheDS - ht
 Import the sample data available [here](http://directory.apache.org/apacheds/basic-ug/resources/apache-ds-tutorial.ldif) by following steps [here](http://directory.apache.org/apacheds/basic-ug/1.5-sample-configuration.html).
 Add a new entry with your details, for example,
 
-* cn: Shiva Kumar H R
-* sn: ShivaHR
-* description: Cloud Solution Architect
-* givenname: Shiva
-* mail: shivahr@in.ibm.com
-* uid: shivahr
-* userpassword: sh1vahr
+* cn: John D
+* sn: JohnD
+* description: Manager
+* givenname: John
+* mail: xxxxx@domain.com
+* uid: xxxx
+* userpassword: xxxxx
 
 ### 5.2 Setup Secure Gateway Client
 
@@ -134,20 +137,23 @@ To be able to access your on-premise LDAP server from within the Mobile Foundati
 
  
 
-1. Log on to IBM Cloud. Click on "Catalog". Under Categories, select "Services -> Integrate", and then click on "Secure Gateway". Click "Create".
+1. Log on to IBM Cloud. Click on 
+	```
+	Catalog > All Categories > Integration > Secure Gateway > Create
+	```
+	
+2. Inside the Secure Gateway service dashboard, click `Add Gateway`. Specify a name and click `Add Gateway`. Click the icon for the gateway that you just added.
 
-2. Inside the Secure Gateway service dashboard, click "Add Gateway". Specify a name and click "Add Gateway". Click the icon for the gateway that you just added.
-
-3. Click "Add Clients". Leave the default selection of "IBM Installer" as-is. Note down the "Gateway ID" and "Security Token".
+3. Click `Add Clients`. Leave the default selection of `IBM Installer` as-is. Note down the `Gateway ID` and `Security Token`.
 
 4. Copy the Download URL for the Secure Gateway Client installer for the OS where LDAP server is running.
 
- 
 5. Log on to the on-premise machine where LDAP server is running. Download the Secure Gateway Client installer using the download URL obtained from Secure Gateway dashboard. Install and start the Secure Gateway Client by using instructions available [here](https://console.bluemix.net/docs/services/SecureGateway/secure_gateway.html).
-Add the LDAP server as a destination in the secure gateway client using instructions available [here](https://console.bluemix.net/docs/services/SecureGateway/securegateway_destination.html#adding-a-destination).
-If the newly added destination shows a raised hand in red colour with info "Access blocked by ACL", then make sure you have run "acl allow host:port" in Secure Gateway Client command-line.
 
-6. On the destination that we just added, click on the Settings button. Copy value under Cloud Host : Port (cap-sg-prd-5.integration.ibmcloud.com:16801). This is what we will specify in our MobileFirst Adapter as the hostname:port of LDAP server.
+Add the LDAP server as a destination in the secure gateway client using instructions available [here](https://console.bluemix.net/docs/services/SecureGateway/securegateway_destination.html#adding-a-destination).
+If the newly added destination shows a raised hand in red colour with info `Access blocked by ACL`, then make sure you have run `acl allow < host >:< port >` in Secure Gateway Client command-line.
+
+6. On the destination that we just added, click on the Settings button. Copy value under Cloud Host : Port (For example, cap-sg-prd-5.integration.ibmcloud.com:16801). This is what we will specify in our MobileFirst Adapter as the `hostname:port` of LDAP server.
 
 
 ## Step 6. Register Android App with Google and Facebook for Social Login
@@ -280,7 +286,7 @@ The ```REVERSED_CLIENT_ID``` is the reverse form of the google webclientID obtai
 Also add the webclientID in the auth_handler.ts file in the googlePlusLogin() method.
 
 
-## Step 8. Deploy the MFP Adapters and Test them
+## Step 8. Deploy the MFP Adapters and Test
 
 ### 8.1 Build and Deploy the MFP adapters
 
