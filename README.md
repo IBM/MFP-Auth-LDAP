@@ -345,9 +345,11 @@ Verify MFP Adapter configuration as below:
 ## Step 9. Run application on Android phone
 
 Follow the instructions in [Step 7](https://github.com/IBM/Ionic-MFP-App#step-7-run-application-on-android-phone) of base project to run the application on Android phone.
-Instead of a plain UserLogin, test the Google Sign-in button or FB sign-in button or the LDAPlogin button.Based on the button chosen, the user authentication validation mechanism will vary. Below screenshot shows the different pages of the application.
+Instead of a plain UserLogin, test the Google Sign-in button or FB sign-in button or the LDAPlogin button.Based on the button chosen, the user authentication validation mechanism will vary. 
 
  <img src="doc/source/images/MyWardAppLoginPage.png" alt="MyWard App - Login Page" width="240" border="10" />
+
+Below screenshot shows the different pages of the application.
 
   <img src="doc/source/images/MyWardAppHomePage.png" alt="MyWard App - Home Page" width="240" border="10" /> <img src="doc/source/images/MyWardAppDetailPage.png" alt="MyWard App - Problem Detail Page" width="240" border="10" /> <img src="doc/source/images/MyWardAppReportNewPage.png" alt="MyWard App - Report New Problem Page" width="240" border="10" />
 
