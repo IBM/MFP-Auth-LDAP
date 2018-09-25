@@ -63,6 +63,8 @@ The diagram above illustrates the login flow (here described with Google but als
 
 # Watch the Video
 
+[Video](https://youtu.be/YgGgK-SxhxI)
+
 # Steps
 
 [1. Setup Ionic and MFP CLI](https://github.com/IBM/Ionic-MFP-App#step-1-setup-ionic-and-mfp-cli)
