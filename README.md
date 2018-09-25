@@ -63,7 +63,7 @@ The diagram above illustrates the login flow (here described with Google but als
 
 # Watch the Video
 
-[Video](https://youtu.be/YgGgK-SxhxI)
+[![](http://img.youtube.com/vi/YgGgK-SxhxI/0.jpg)](https://youtu.be/YgGgK-SxhxI)
 
 # Steps
 
