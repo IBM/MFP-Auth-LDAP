@@ -20,7 +20,7 @@ When you have completed this code pattern, you will understand:
 ## Flow
 
 ### Social Login 
-<img src="doc/source/images/SocialLogin.png" alt="Architecture diagram - Login through on-premise LDAP server" width="1024" border="10" />
+<img src="doc/source/images/SocialLogin.png" alt="Architecture diagram - Login through social login server" width="1024" border="10" />
 
 The diagram above illustrates the login flow (here described with Google but also relevant to Facebook or other social providers). The diagram shows that the trigger to call social providers is initiated by the client.
 
