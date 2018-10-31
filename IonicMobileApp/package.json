@@ -81,14 +81,14 @@
                 "API_KEY_FOR_IOS": "(API_KEY_FOR_IOS)"
             },
             "cordova-plugin-facebook4": {
-                "APP_ID": "226320204812020",
+                "APP_ID": "(FB_APP_ID)",
                 "APP_NAME": "MyWard"
             },
             "cordova-plugin-camera": {},
             "info.protonet.imageresizer": {},
             "cordova-plugin-nativegeocoder": {},
             "cordova-plugin-googleplus": {
-                "REVERSED_CLIENT_ID": "com.googleusercontent.apps.618106571370-pr9058fhv2efj4635ertkgbn14tda2ha"
+                "REVERSED_CLIENT_ID": "(REVERSE_CLIENT_ID)"
             }
         },
         "platforms": [
