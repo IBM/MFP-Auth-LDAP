@@ -33,7 +33,7 @@
                   description="If true, the token submitted by the client is stored in the Authenticated User as an attribute 'originalToken'"
         />
         <property name="google.clientId"
-                  defaultValue="618106571370-nie902ccc0i3id6sgdu4nc58bslitkt6.apps.googleusercontent.com"
+                  defaultValue="please add google client id here"
 				  displayName="google client Id"
                   description="OAuth 2.0 client ID that was created for your server. Get it from Google Developers Console
                   at https://console.developers.google.com/projectselector/apis/credentials"/>
