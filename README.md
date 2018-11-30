@@ -12,7 +12,7 @@ When you have completed this code pattern, you will understand:
 
 * How to achieve user authentication in mobile apps where the user repository is an enterprise LDAP server.
 * How to achieve user authentication in mobile apps using Social login mechanisms like Google or Facebook.
-* How to write MFP adapters that fetch data from Cloud Object Storage service and Cloudant service.
+* How to write MobileFoundation adapters that fetch data from Cloud Object Storage service and Cloudant service.
 * How to capture user’s geo-location & image from camera and show in Google Maps.
 
 
@@ -20,35 +20,37 @@ When you have completed this code pattern, you will understand:
 ## Flow
 
 ### Social Login 
-<img src="doc/source/images/SocialLogin.png" alt="Architecture diagram - Login through social login server" width="1024" border="10" />
+<img src="doc/source/images/SocialLoginArch.png" alt="Architecture diagram - Login through social login server" width="1024" border="10" />
 
 The diagram above illustrates the login flow (here described with Google but also relevant to Facebook or other social providers). The diagram shows that the trigger to call social providers is initiated by the client.
 
-1. User launches the mobile app, and clicks on 'Google Sign In' button in the login screen.
-2. The Google Android SDK calls the Google Sign-In REST service.
-3. The access token from Google is received and the App calls the login API, with scope social-login and credentials (vendor + token).
-4. The MFP SDK sends the credentials and scope to the Authorization Server API. The Authorization API calls the mapped security check social-login to validate the credentials.
-5. The social-login security check validates the Google token with its web client identifier from the security check configuration. The social-login returns the authenticated user to the Authorization Server API.
-6. The Authorization Server API returns the authenticated user data to the MFP SDK. The MFPSDK calls the handleSuccess method in the challenge handler with the authenticated user data. The MFP SDK calls login success callback on the app.
-7. If user authentication succeeds, mobile app proceeds to show the home page. As part of this, it makes a call to MFP adapter to fetch the data from Cloudant NoSQL database. MFP adapter fetches the data from Cloudant and returns it to the mobile app. 
-8. The data fetched from Cloudant will have references to the images stored in Cloud Object Storage. Mobile app makes a call to MFP adapter to get the Authorization token for interacting with Cloud Object Storage service. MFP adapter makes a call to Cloud Object Storage service's token manager endpoint to get the Authorization token and returns it to the mobile app.
-9.  Mobile app initializes image-caching plugin and fetches the images  from Object Storage. Mobile app displays the data obtained from MFP adapter as a list of items.
-10. User clicks on one of the list item to see more details. A detail page is shown consisting of image and geo-location marked inside Google Maps.
+1. User launches the mobile app, and chooses to sign in with Google.
+2. The Google Android SDK calls the Google Signin REST service.
+3. The access token from the REST service is received, and the mobile app calls the login API, with scope social-login and credentials (vendor + token).
+4. The Mobile Foundation SDK sends the credentials and scope to the Mobile Foundation Authorization Server API. The Authorization API calls the mapped security check social-login to validate the credentials.
+5. The social-login security check validates the token with its web client identifier from the security check configuration. The social-login returns the authenticated user to the Authorization Server API.
+6. The Authorization Server API returns the authenticated user data to the Mobile Foundation SDK. The Mobile Foundation SDK passes authenticated user data back to the app.
+7. If user authentication succeeds, the mobile app shows the home page. The mobile app makes a call to the Mobile Foundation adapter to fetch the data from the Cloudant database and return it to the mobile app.
+8. The data fetched from Cloudant will have references to the images stored in Cloud Object Storage. The mobile app makes a call to the Mobile Foundation adapter to get the Authorization token for interacting with Cloud Object Storage service. The Mobile Foundation adapter makes a call to the Cloud Object Storage service’s token manager endpoint to get the Authorization token and returns it to the mobile app.
+9.  The mobile app initializes image-caching plugin and fetches the images from Object Storage.
+10. The mobile app displays the data obtained from the Mobile Foundation adapter as a list of items.
+11. User clicks on one of the list item to see more details. A detail page is shown consisting of image and geo-location marked inside Google Maps.
 
 
 ### Login through on-premise LDAP server ###
 
-<img src="doc/source/images/ldaplogin.png" alt="Architecture diagram - Login through on-premise LDAP server" width="1024" border="10" />
+<img src="doc/source/images/LDAPLoginArch.png" alt="Architecture diagram - Login through on-premise LDAP server" width="1024" border="10" />
 
-1. User launches the mobile app, and clicks on the login button in the login screen.
-2. Mobile app invokes the security check adapter deployed on Mobile foundation server to validate the user credentials. 
-3. In this case, the security check adapter connects to the on-premise enterprise LDAP server through a secure gateway, to do the user credential validation.
-4. The enterprise LDAP server validates the credentials and sends the response back to the MFP server through the secure gateway.
-5. The MFP server returns the authenticated user data to the MFP SDK. The MFP SDK calls the handleSuccess method in the challenge handler with the authenticated user data. The MFP SDK calls login success callback on the app.
-6. If user authentication succeeds, mobile app proceeds to show the home page. As part of this, it makes a call to MFP adapter to fetch the data from Cloudant NoSQL database. MFP adapter fetches the data from Cloudant and returns it to the mobile app.
-7. The data fetched from Cloudant will have references to the images stored in Cloud Object Storage. Mobile app makes a call to MFP adapter to get the Authorization token for interacting with Cloud Object Storage service. MFP adapter makes a call to Cloud Object Storage service's token manager endpoint to get the Authorization token and returns it to the mobile app.
-8. Mobile app initializes image-caching plugin and fetches the images  from Object Storage. Mobile app displays the data obtained from MFP adapter as a list of items.
-9. User clicks on one of the list item to see more details. A detail page is shown consisting of image and geo-location marked inside Google Maps.
+1. The user launches the mobile app, and clicks the login button.
+2. The mobile app invokes the Mobile Foundation security check adapter to validate the user credentials.
+3. To validate the user credentials, the security check adapter connects to the on-premise enterprise LDAP server through a secure gateway.
+4. The enterprise LDAP server validates the credentials and sends the response back to the Mobile Foundation server through the secure gateway.
+5. The Mobile Foundation server returns the authenticated user data to the Mobile Foundation SDK. The Mobile Foundation SDK passes authenticated user data back to the app.
+6. If user authentication succeeds, the mobile app shows the home page. The mobile app makes a call to the Mobile Foundation adapter to fetch the data from the Cloudant database and return it to the mobile app.
+7. The data fetched from Cloudant will have references to the images stored in Cloud Object Storage. The mobile app makes a call to the Mobile Foundation adapter to get the Authorization token for interacting with Cloud Object Storage service. The Mobile Foundation adapter makes a call to the Cloud Object Storage service’s token manager endpoint to get the Authorization token and returns it to the mobile app.
+8. The mobile app initializes image-caching plugin and fetches the images from Object Storage.
+9. The mobile app displays the data obtained from the Mobile Foundation adapter as a list of items.
+10. The user clicks on one of the list item to see more details. A detail page is shown consisting of image and geo-location marked inside Google Maps.
 
 
 
@@ -67,7 +69,7 @@ The diagram above illustrates the login flow (here described with Google but als
 
 # Steps
 
-[1. Setup Ionic and MFP CLI](https://github.com/IBM/Ionic-MFP-App#step-1-setup-ionic-and-mfp-cli)
+[1. Setup Ionic and MobileFoundation CLI](https://github.com/IBM/Ionic-MFP-App#step-1-setup-ionic-and-mfp-cli)
 
 [2. Create Cloudant database and populate it with sample data](https://github.com/IBM/Ionic-MFP-App#step-2-create-cloudant-database-and-populate-it-with-sample-data)
 
@@ -85,37 +87,37 @@ The diagram above illustrates the login flow (here described with Google but als
   
   * [7.2 Update App ID, Name and Description](#72-update-app-id-name-and-description)
   
-  * [7.3 Specify Cloudant credentials in MFP adapter](#73-specify-cloudant-credentials-in-mfp-adapter)
+  * [7.3 Specify Cloudant credentials in MobileFoundation adapter](#73-specify-cloudant-credentials-in-mfp-adapter)
   
-  * [7.4 Specify Cloud Object Storage credentials in MFP Adapter](#74-specify-cloud-object-storage-credentials-in-mfp-adapter)
+  * [7.4 Specify Cloud Object Storage credentials in MobileFoundation Adapter](#74-specify-cloud-object-storage-credentials-in-mfp-adapter)
   
-  * [7.5  Specify LDAP Credentials in MFP Adapter](#75-specify-ldap-credentials-in-mfp-adapter)
+  * [7.5  Specify LDAP Credentials in MobileFoundation Adapter](#75-specify-ldap-credentials-in-mfp-adapter)
   
-  * [7.6 Specify Google Sign-in credentials in MFP Adapter](#76-specify-google-sign-in-credentials-in-mfp-adapter)
+  * [7.6 Specify Google Sign-in credentials in MoileFoundation Adapter](#76-specify-google-sign-in-credentials-in-mfp-adapter)
   
   * [7.7 Specify the Facebook AppID and Google clientID in the Ionic App](#77-specify-the-facebook-appid-and-google-clientid-in-the-ionic-app)
   
   
-[8. Deploy the MFP Adapters and Test](#step8-deploy-the-mfp-adapters-and-test)
+[8. Deploy the MobileFoundation Adapters and Test](#step8-deploy-the-mfp-adapters-and-test)
 
-   * [8.1 Build and Deploy the MFP adapters](#81-build-and-deploy-the-mfp-adapters)
+   * [8.1 Build and Deploy the MobileFoundation adapters](#81-build-and-deploy-the-mfp-adapters)
 	
-   * [8.2 Launch MFP dashboard and verify adapter configurations](#82-launch-mfp-dashboard-and-verify-adapter-configurations)
+   * [8.2 Launch MobileFoundation dashboard and verify adapter configurations](#82-launch-mfp-dashboard-and-verify-adapter-configurations)
   
   
 [9. Run application on Android phone](https://github.com/IBM/Ionic-MFP-App#step-7-run-application-on-android-phone)
 
 
 ## Prerequisite steps
-This project builds on top of https://github.com/IBM/Ionic-MFP-App. Run following steps from that [base project](https://github.com/IBM/Ionic-MFP-App) to provision the needed mobile backend services from IBM Cloud and populate them with sample data, as well as to setup Ionic and MFP CLI on your development machine.
+This project builds on top of https://github.com/IBM/Ionic-MFP-App. Run following steps from that [base project](https://github.com/IBM/Ionic-MFP-App) to provision the needed mobile backend services from IBM Cloud and populate them with sample data, as well as to setup Ionic and MobileFoundation CLI on your development machine.
 
-   [Step 1. Setup Ionic and MFP CLI](https://github.com/IBM/Ionic-MFP-App#step-1-setup-ionic-and-mfp-cli) 
+   [Step 1. Setup Ionic and MobileFoundation CLI](https://github.com/IBM/Ionic-MFP-App#step-1-setup-ionic-and-mfp-cli) 
    
    [Step 2. Create Cloudant database and populate it with sample data](https://github.com/IBM/Ionic-MFP-App#step-2-create-cloudant-database-and-populate-it-with-sample-data)
    
    [Step 3. Create IBM Cloud Object Storage service and populate it with sample data](https://github.com/IBM/Ionic-MFP-App#step-3-create-ibm-cloud-object-storage-service-and-populate-it-with-sample-data)
    
-   [Step 4. Create Mobile Foundation service and configure MFP CLI](https://github.com/IBM/Ionic-MFP-App#step-4-create-mobile-foundation-service-and-configure-mfp-cli)
+   [Step 4. Create Mobile Foundation service and configure MobileFoundation CLI](https://github.com/IBM/Ionic-MFP-App#step-4-create-mobile-foundation-service-and-configure-mfp-cli)
  
 
 ## Step 5. Setup LDAP server and Secure Gateway Client
@@ -193,7 +195,7 @@ Update `IonicMobileApp/config.xml` as below. Change `id`, `name`, `description` 
 ...
 </code></pre>
 
-### 7.3 Specify Cloudant credentials in MFP adapter
+### 7.3 Specify Cloudant credentials in MobileFoundation adapter
 
 Open `MobileFoundationAdapters/MyWardData/src/main/adapter-resources/adapter.xml` and update the following properties to point to the Cloudant database created in [Step 2](#step-2-create-cloudant-database-and-populate-it-with-sample-data).
  * Update `key` and `password` with the Cloudant API key as generated in [Step 2.2](#22-generate-cloudant-api-key).
@@ -211,7 +213,7 @@ Open `MobileFoundationAdapters/MyWardData/src/main/adapter-resources/adapter.xml
 </code></pre>
 
 
-### 7.4 Specify Cloud Object Storage credentials in MFP Adapter
+### 7.4 Specify Cloud Object Storage credentials in MobileFoundation Adapter
 
 Open `MobileFoundationAdapters/MyWardData/src/main/adapter-resources/adapter.xml` and update the following properties to point to the Cloud Object Storage created in [Step 3](#step-3-create-ibm-cloud-object-storage-service-and-populate-it-with-sample-data).
   * Specify value for `bucketName` as created in [Step 3.1](#31-create-ibm-cloud-object-storage). 
@@ -228,7 +230,7 @@ Open `MobileFoundationAdapters/MyWardData/src/main/adapter-resources/adapter.xml
 &lt;/mfp:adapter&gt;
 </code></pre>
 
-### 7.5 Specify LDAP Credentials in MFP Adapter
+### 7.5 Specify LDAP Credentials in MobileFoundation Adapter
 
 Open `MobileFoundationAdapters/LDAPLoginAdapter/src/main/adapter-resources/adapter.xml` and update the following properties to point to the Secure Gateway client created in [step 5.2](#52-setup-secure-gateway-client)
 <pre><code>
@@ -241,7 +243,7 @@ Open `MobileFoundationAdapters/LDAPLoginAdapter/src/main/adapter-resources/adapt
 
 </code></pre>
 
-### 7.6 Specify Google Sign-in credentials in MFP Adapter
+### 7.6 Specify Google Sign-in credentials in MobileFoundation Adapter
 Open `MobileFoundationAdapters/SocialLoginAdapter/src/main/adapter-resources/adapter.xml` and update the google client-id created in [step 6](#6-register-android-app-with-google-and-facebook-for-social-login) as shown below
 
 <pre><code>
@@ -288,9 +290,9 @@ The ```REVERSED_CLIENT_ID``` is the reverse form of the google webclientID obtai
 Also add the webclientID in the auth_handler.ts file in the googlePlusLogin() method.
 
 
-## Step 8. Deploy the MFP Adapters and Test
+## Step 8. Deploy the MobileFoundation Adapters and Test
 
-### 8.1 Build and Deploy the MFP adapters
+### 8.1 Build and Deploy the MobileFoundation adapters
 
 Build and deploy `MyWardData` Adapter as below.
 
@@ -320,17 +322,17 @@ $ mfpdev adapter build
 $ mfpdev adapter deploy
 ```
 
-### 8.2 Launch MFP dashboard and verify adapter configurations
+### 8.2 Launch MobileFoundation dashboard and verify adapter configurations
 
-Launch MFP Dashboard as below:
-  * In the [IBM Cloud dashboard](https://console.bluemix.net/dashboard/), under `Cloud Foundry Services`, click on the `Mobile Foundation` service you created in [Step 4](https://github.com/IBM/Ionic-MFP-App#step-4-create-mobile-foundation-service-and-configure-mfp-cli). The service overview page that gets shown, will have the MFP dashboard embedded within it. You can also open the MFP dashboard in a separate browser tab by appending `/mfpconsole` to the *url* mentioned in [Step 4](https://github.com/IBM/Ionic-MFP-App#step-4-create-mobile-foundation-service-and-configure-mfp-cli).
-  * Inside the MFP dashboard, in the list on the left, you will see the `LDAPLoginAdapter`, `SocialLoginAdapter` and `MyWardData` adapters listed.
+Launch MobileFoundation Dashboard as below:
+  * In the [IBM Cloud dashboard](https://console.bluemix.net/dashboard/), under `Cloud Foundry Services`, click on the `Mobile Foundation` service you created in [Step 4](https://github.com/IBM/Ionic-MFP-App#step-4-create-mobile-foundation-service-and-configure-mfp-cli). The service overview page that gets shown, will have the MobileFoundation dashboard embedded within it. You can also open the MobileFoundation dashboard in a separate browser tab by appending `/mfpconsole` to the *url* mentioned in [Step 4](https://github.com/IBM/Ionic-MFP-App#step-4-create-mobile-foundation-service-and-configure-mfp-cli).
+  * Inside the MobileFoundation dashboard, in the list on the left, you will see the `LDAPLoginAdapter`, `SocialLoginAdapter` and `MyWardData` adapters listed.
 
-Verify MFP Adapter configuration as below:
+Verify MobileFoundation Adapter configuration as below:
 
-  1. Inside the MFP dashboard, click on the `MyWardData` adapter. Under `Configurations` tab, you should see the various properties we specified in [Step 7.3](#73-specify-cloudant-credentials-in-mfp-adapter) and [Step 7.4](#74-specify-cloud-object-storage-credentials-in-mfp-adapter) for accessing Cloudant database and Cloud Object Storage as shown below. As an alternative to specifying those property values in `MobileFoundationAdapters/MyWardData/src/main/adapter-resources/adapter.xml` as previously shown in [Step 7.3](#73-specify-cloudant-credentials-in-mfp-adapter) and [Step 7.4](#74-specify-cloud-object-storage-credentials-in-mfp-adapter), you can deploy the adapters with empty `defaultValue`, and once the adapter is deployed, change the values on this page.
+  1. Inside the MobileFoundation dashboard, click on the `MyWardData` adapter. Under `Configurations` tab, you should see the various properties we specified in [Step 7.3](#73-specify-cloudant-credentials-in-mfp-adapter) and [Step 7.4](#74-specify-cloud-object-storage-credentials-in-mfp-adapter) for accessing Cloudant database and Cloud Object Storage as shown below. As an alternative to specifying those property values in `MobileFoundationAdapters/MyWardData/src/main/adapter-resources/adapter.xml` as previously shown in [Step 7.3](#73-specify-cloudant-credentials-in-mfp-adapter) and [Step 7.4](#74-specify-cloud-object-storage-credentials-in-mfp-adapter), you can deploy the adapters with empty `defaultValue`, and once the adapter is deployed, change the values on this page.
 
-  <img src="doc/source/images/MyWardDataConfigurations.png" alt="Option to specify the configuration properties for accessing Cloudant NoSQL DB and Cloud Object Storage in deployed MFP Adapter" width="640" border="10" />
+  <img src="doc/source/images/MyWardDataConfigurations.png" alt="Option to specify the configuration properties for accessing Cloudant NoSQL DB and Cloud Object Storage in deployed MobileFoundation Adapter" width="640" border="10" />
 
   * Click on `Resources` tab. You should see the various REST APIs exposed by `MyWardData` adapter as shown below. The `Security` column should show the protecting scope `UserLogin` against each REST method.
     
