@@ -98,11 +98,11 @@ The diagram above illustrates the login flow (here described with Google but als
   * [7.7 Specify the Facebook AppID and Google clientID in the Ionic App](#77-specify-the-facebook-appid-and-google-clientid-in-the-ionic-app)
   
   
-[8. Deploy the MobileFoundation Adapters and Test](#step8-deploy-the-mfp-adapters-and-test)
+[8. Deploy the MobileFoundation Adapters and Test](#step-8-deploy-the-mobilefoundation-adapters)
 
-   * [8.1 Build and Deploy the MobileFoundation adapters](#81-build-and-deploy-the-mfp-adapters)
+   * [8.1 Build and Deploy the MobileFoundation adapters](#81-build-and-deploy-the-mobilefoundation-adapters)
 	
-   * [8.2 Launch MobileFoundation dashboard and verify adapter configurations](#82-launch-mfp-dashboard-and-verify-adapter-configurations)
+   * [8.2 Launch MobileFoundation dashboard and verify adapter configurations](#82-launch-mobilefoundation-dashboard-and-verify-adapter-configurations)
   
   
 [9. Run application on Android phone](https://github.com/IBM/Ionic-MFP-App#step-7-run-application-on-android-phone)
@@ -256,14 +256,13 @@ Open `MobileFoundationAdapters/SocialLoginAdapter/src/main/adapter-resources/ada
 </code></pre>
 
 ### 7.7 Specify the Facebook AppID and Google clientID in the Ionic App
-Install the Cordova and Ionic Facebook plugin using following commands
+Install the Cordova and Ionic Facebook plugin and GooglePlus plugin using following commands (python2 is a pre-requisite)
 ```
 $ ionic cordova plugin add cordova-plugin-facebook4 --variable APP_ID="your_appid_from_step6" --variable APP_NAME="your application name"
 
 $ npm install --save @ionic-native/facebook
 ```
 
-Install the Cordova and Ionic GooglePlus plugin using following commands
 ```
 $ ionic cordova plugin add cordova-plugin-googleplus --variable REVERSED_CLIENT_ID="reverseclientid_from_step6"
 
@@ -290,7 +289,7 @@ The ```REVERSED_CLIENT_ID``` is the reverse form of the google webclientID obtai
 Also add the webclientID in the auth_handler.ts file in the googlePlusLogin() method.
 
 
-## Step 8. Deploy the MobileFoundation Adapters and Test
+## Step 8. Deploy the MobileFoundation Adapters
 
 ### 8.1 Build and Deploy the MobileFoundation adapters
 
