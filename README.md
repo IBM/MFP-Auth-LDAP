@@ -105,7 +105,7 @@ The diagram above illustrates the login flow (here described with Google but als
    * [8.2 Launch MobileFoundation dashboard and verify adapter configurations](#82-launch-mobilefoundation-dashboard-and-verify-adapter-configurations)
   
   
-[9. Run application on Android phone](https://github.com/IBM/Ionic-MFP-App#step-7-run-application-on-android-phone)
+[9. Run application on Android phone](#step-9-run-application-on-android-phone)
 
 
 ## Prerequisite steps
