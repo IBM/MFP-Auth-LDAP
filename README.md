@@ -33,8 +33,7 @@ The diagram above illustrates the login flow (here described with Google but als
 7. If user authentication succeeds, the mobile app shows the home page. The mobile app makes a call to the Mobile Foundation adapter to fetch the data from the Cloudant database and return it to the mobile app.
 8. The data fetched from Cloudant will have references to the images stored in Cloud Object Storage. The mobile app makes a call to the Mobile Foundation adapter to get the Authorization token for interacting with Cloud Object Storage service. The Mobile Foundation adapter makes a call to the Cloud Object Storage service’s token manager endpoint to get the Authorization token and returns it to the mobile app.
 9.  The mobile app initializes image-caching plugin and fetches the images from Object Storage.
-10. The mobile app displays the data obtained from the Mobile Foundation adapter as a list of items.
-11. User clicks on one of the list item to see more details. A detail page is shown consisting of image and geo-location marked inside Google Maps.
+10. The mobile app displays the data obtained from the Mobile Foundation adapter as a list of items. User clicks on one of the list item to see more details. A detail page is shown consisting of image and geo-location marked inside Google Maps.
 
 
 ### Login through on-premise LDAP server ###
